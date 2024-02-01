@@ -5,16 +5,50 @@ import { FaRegUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 
+
+import { createacontSerive, loginService } from "./../Services/UserService.js";
+
 import "./Start.css";
 
 function Start() {
 
     const [isRegister, setIsRegister] = React.useState(false);
     const [verticalNavTrigger, setVerticalNavTrigger] = React.useState(false);
+    const [user, setUser] = React.useState({
+        firstName: "",
+        lastName: "",
+        password: "",
+        password_2: "",
+        email: ""
+    })
 
-    const handleRegister = () => setIsRegister(!isRegister);
+    const handleRegister = () => {setIsRegister(!isRegister); setUser({firstName: "", lastName: "", password: "", password_2: "", email: ""})};
     const handleVerticalNav = () => setVerticalNavTrigger(!verticalNavTrigger);
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setUser({ ...user, [name]: value });
+    }
+
+    const createacont = (e) => {
+        if(
+            user?.firstName !== "" &&
+            user?.lastName !== "" &&
+            user?.password !== "" &&
+            user?.password_2 !== "" &&
+            user?.email !== ""
+        ){
+            e.preventDefault();
+            createacontSerive(user);
+        }
+    }
+
+    const login = (e) => {
+        if(user?.password !== "" && user?.email !== ""){
+            e.preventDefault();
+            loginService(user)
+        }
+    }
 
   return (
     <div className={verticalNavTrigger ? "container-start background-nav-mobile" : "container-start"}>
@@ -50,12 +84,26 @@ function Start() {
             <form className={isRegister ? "change-form-login star-login" : "start-login"}>
                 <h1>Login</h1>
                 <div className="form-input">
-                    <input type="text" required/>
+                    <input
+                        maxLength={64}
+                        type="text"
+                        name="email"
+                        value={user.email}
+                        onChange={handleInputChange}
+                        required 
+                    />
                     <label>Email</label>
                     <MdOutlineEmail />
                 </div>
                 <div className="form-input">
-                    <input type="password" required/>
+                    <input 
+                        maxLength={12}
+                        value={user.password}
+                        type="password" 
+                        name="password"
+                        onChange={handleInputChange}
+                        required
+                    />
                     <label>Senha</label>
                     <FiLock />
                 </div>
@@ -66,37 +114,72 @@ function Start() {
                     </span>
                     <h5>Esqueceu sua senha?</h5>
                 </div>
-                <button className="form-submit" type="submit">Entrar</button>
+                <button className="form-submit" type="submit" onClick={login}>Entrar</button>
                 <h5>Não tem uma conta? <span onClick={handleRegister}>Registre-se</span></h5>
             </form>
             <form className={isRegister ? "star-register" : "change-form-register start-register"}>
                 <h1 className="start-header-title">Registrar</h1>
                 <div className="form-input">
-                    <input type="text" required/>
+                    <input 
+                        maxLength={15}
+                        type="text" 
+                        name="firstName"
+                        value={user.firstName}
+                        onChange={handleInputChange}
+                        required
+                    />
                     <label>Nome</label>
                     <FaRegUser />
                 </div>
                 <div className="form-input">
-                    <input type="text" required/>
+                    <input
+                        maxLength={32}
+                        type="text"
+                        value={user.lastName}
+                        name="lastName"
+                        onChange={handleInputChange}
+                        required
+                    />
                     <label>Sobrenome</label>
                     <FaRegUser />
                 </div>
                 <div className="form-input">
-                    <input type="text" required/>
+                    <input 
+                        maxLength={64}
+                        type="text"
+                        name="email"
+                        value={user.email}
+                        onChange={handleInputChange}
+                        required
+                    />
                     <label>Email</label>
                     <MdOutlineEmail />
                 </div>
                 <div className="form-input">
-                    <input type="password" required/>
+                    <input 
+                        maxLength={12}
+                        type="password"
+                        name="password"
+                        value={user.password}
+                        onChange={handleInputChange}
+                        required
+                    />
                     <label>Senha</label>
                     <FiLock />
                 </div>
                 <div className="form-input">
-                    <input type="password" required/>
-                    <label>Senha novamente </label>
+                    <input
+                        maxLength={12}
+                        type="password" 
+                        name="password_2"
+                        value={user.password_2}
+                        onChange={handleInputChange}
+                        required
+                    />
+                    <label>Senha novamente</label>
                     <FiLock />
                 </div>
-                <button className="form-submit" type="submit">Registrar</button>
+                <button className="form-submit" type="submit" onClick={createacont}>Registrar</button>
                 <h5><span onClick={handleRegister}>Ja tenho uma conta!</span></h5>
             </form>
         </div>
