@@ -4,30 +4,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .container-start .container-start-header {
-    position: fixed;
+    position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     font-size: 1.2em;
     padding: 0.8em 0.5em;
     color: white;
 }
 
 .container-start .container-start-header .start-header-title {
-    width: 20%;
+    position: absolute;
+    top: 0;
+    left: 4%;
+    width: 12%;
+    object-fit: cover;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .container-start .container-start-header nav {
-    width: 40%;
+    width: 36%;
     display: flex;
     align-items: center;
     margin: 0 2em;
@@ -216,7 +221,7 @@
 }
 
 .container-start .container-mobile {
-    background-color: #282828;
+    background-color: #333333;
     width: 50%;
     height: 100%;
     position: absolute;
@@ -235,8 +240,8 @@
     height: 50px;
     display: flex;
     align-items: center;
-    background-color: yellow;
-    border-bottom: 2px solid white;
+    background-color: #333333;
+    border-bottom: 1px solid white;
 }
 
 .container-start .container-mobile header div {
@@ -247,10 +252,11 @@
     justify-content: center;
     margin: 0 0.5em;
     transition: 0.5s;
+    color: #757575
 }
 
 .container-start .container-mobile header div:hover {
-    color: #7e7a7a;
+    color: white;
 }
 
 .container-start .container-mobile nav {
@@ -272,6 +278,10 @@
     height: 100%;
     border-bottom: 2px solid white;
     transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 1em;
 }
 
 .container-start .container-mobile nav ul li button:hover {
@@ -282,16 +292,6 @@
 @media screen and (max-width: 500px){
     .container-start .container-start-header .start-header-title {
         font-size: 1.5em;
-    }
-
-    .container-start .container-form {
-        width: 300px;
-        height: 350px;
-        border: 1px solid white;
-    }
-
-    .container-start .container-form .form-input {
-        margin: 0.6em 0;
     }
 
     .container-start .container-form .form-input input {
@@ -305,14 +305,6 @@
     .container-start .container-form .form-checkbox {
         font-size: 0.9em;   
     }
-
-    .container-start .container-form .form-submit {
-        height: 2em;
-        border-radius: 1.6em;
-        margin: 0.3em 0;
-        font-size: 1em;
-    }
-
     .container-start .container-form .start-register .form-submit {
         height: 1.7em;
     }
@@ -337,6 +329,22 @@
     .container-start .container-form {
         width: 350px;
         height: 400px;
+        border: 1px solid white;
+    }
+
+    .container-start .container-start-header .start-header-title {
+        width: 15%;
+    }
+
+    .container-start .container-form .form-submit {
+        height: 2em;
+        border-radius: 1.6em;
+        margin: 0.3em 0;
+        font-size: 1em;
+    }
+
+    .container-start .container-form .form-input {
+        margin: 0.6em 0;
     }
 
     .container-start .container-start-header nav {
@@ -352,5 +360,10 @@
         font-size: 0.9em;
         margin: 1.2em 0em;
     }
+}
 
+@media screen and (max-width: 1300px){
+    .container-start .container-start-header nav {
+        width: 40%;
+    }
 }

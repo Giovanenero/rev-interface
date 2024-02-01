@@ -4,16 +4,24 @@ import { FiLock } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
+import { IoHomeOutline } from "react-icons/io5";
+import { BsInfoCircle } from "react-icons/bs";
+import { TiPhoneOutline } from "react-icons/ti";
 
 
 import { createacontSerive, loginService } from "./../Services/UserService.js";
 
+import logo from "./../Assets/logo-rev.png";
+
 import "./Start.css";
+
+import PopUp from "./../Components/PopUp.js"
 
 function Start() {
 
     const [isRegister, setIsRegister] = React.useState(false);
     const [verticalNavTrigger, setVerticalNavTrigger] = React.useState(false);
+    const [messagePopup, setMessagePopup] = React.useState(false);
     const [user, setUser] = React.useState({
         firstName: "",
         lastName: "",
@@ -39,7 +47,7 @@ function Start() {
             user?.email !== ""
         ){
             e.preventDefault();
-            createacontSerive(user);
+            createacontSerive(user, setMessagePopup);
         }
     }
 
@@ -53,7 +61,7 @@ function Start() {
   return (
     <div className={verticalNavTrigger ? "container-start background-nav-mobile" : "container-start"}>
         <header className="container-start-header">
-            <h1 className="start-header-title">Logo</h1>
+            <img className="start-header-title" src={logo} alt="Logo"/>
             <nav>
                 <ul>
                     <li><button id="test">Inicio</button></li>
@@ -73,9 +81,9 @@ function Start() {
             </header>
             <nav>
                 <ul>
-                    <li><button id="test">Inicio</button></li>
-                    <li><button>Sobre</button></li>
-                    <li><button>Contato</button></li>
+                    <li><button id="test">Inicio <IoHomeOutline /></button></li>
+                    <li><button>Sobre<BsInfoCircle /></button></li>
+                    <li><button>Contato<TiPhoneOutline /></button></li>
                 </ul>
             </nav>
 
@@ -183,6 +191,14 @@ function Start() {
                 <h5><span onClick={handleRegister}>Ja tenho uma conta!</span></h5>
             </form>
         </div>
+        {messagePopup && (
+            <PopUp 
+                type={messagePopup?.type} 
+                text={messagePopup?.text}
+                title={messagePopup?.title}
+                setTrigger={setMessagePopup}
+            />
+        )}
     </div>
   );
 }
