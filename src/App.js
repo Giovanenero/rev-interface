@@ -1,10 +1,10 @@
 import React from "react";
-import Login from "./Views/Login.js";
+import Start from "./Views/Start.js";
 
 function App() {
   return (
     <div style={{width: "100vw", height: "100vh"}}>
-      <Login />
+      <Start />
     </div>
   );
 }
