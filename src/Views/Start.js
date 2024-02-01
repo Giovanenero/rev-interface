@@ -2,18 +2,22 @@ import React from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoMdClose } from "react-icons/io";
 
 import "./Start.css";
 
 function Start() {
 
     const [isRegister, setIsRegister] = React.useState(false);
+    const [verticalNavTrigger, setVerticalNavTrigger] = React.useState(false);
 
     const handleRegister = () => setIsRegister(!isRegister);
+    const handleVerticalNav = () => setVerticalNavTrigger(!verticalNavTrigger);
 
 
   return (
-    <div className="container-start">
+    <div className={verticalNavTrigger ? "container-start background-nav-mobile" : "container-start"}>
         <header className="container-start-header">
             <h1 className="start-header-title">Logo</h1>
             <nav>
@@ -23,7 +27,25 @@ function Start() {
                     <li><button>Contato</button></li>
                 </ul>
             </nav>
+            <div className="container-nav-mobile" onClick={handleVerticalNav}>
+                <GiHamburgerMenu size={30}/>
+            </div>
         </header>
+        <div className={verticalNavTrigger ? "container-mobile change-nav-mobile" : "container-mobile"}>
+            <header>
+                <div onClick={handleVerticalNav}>
+                    <IoMdClose size={30}/>
+                </div>
+            </header>
+            <nav>
+                <ul>
+                    <li><button id="test">Inicio</button></li>
+                    <li><button>Sobre</button></li>
+                    <li><button>Contato</button></li>
+                </ul>
+            </nav>
+
+        </div>
         <div className="container-form">
             <form className={isRegister ? "change-form-login star-login" : "start-login"}>
                 <h1>Login</h1>
@@ -45,7 +67,7 @@ function Start() {
                     <h5>Esqueceu sua senha?</h5>
                 </div>
                 <button className="form-submit" type="submit">Entrar</button>
-                <h5 onClick={handleRegister}>Não tem uma conta? Registre-se</h5>
+                <h5>Não tem uma conta? <span onClick={handleRegister}>Registre-se</span></h5>
             </form>
             <form className={isRegister ? "star-register" : "change-form-register start-register"}>
                 <h1 className="start-header-title">Registrar</h1>
@@ -75,7 +97,7 @@ function Start() {
                     <FiLock />
                 </div>
                 <button className="form-submit" type="submit">Registrar</button>
-                <h5 onClick={handleRegister}>Ja tenho uma conta!</h5>
+                <h5><span onClick={handleRegister}>Ja tenho uma conta!</span></h5>
             </form>
         </div>
     </div>

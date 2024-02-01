@@ -10,13 +10,13 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     font-size: 1.2em;
-    padding: 1.2em 0.5em;
-    color: white
+    padding: 0.8em 0.5em;
+    color: white;
 }
 
 .container-start .container-start-header .start-header-title {
@@ -30,6 +30,7 @@
     width: 40%;
     display: flex;
     align-items: center;
+    margin: 0 2em;
 }
 
 .container-start .container-start-header nav ul {
@@ -45,13 +46,13 @@
     align-items: center;
     justify-content: center;
     padding: 0.3em;
-    background-color: red;
     cursor: pointer;
     border: none;
     background-color: transparent;
 }
 
-.container-start .container-start-header nav ul li button {
+.container-start .container-start-header nav ul li button,
+.container-start .container-mobile nav ul li button {
     position: relative;
     background-color: transparent;
     border: none;
@@ -164,10 +165,34 @@
     font-size: 1em;
 }
 
-.container-start .container-form h5,
+.container-start h5 span,
+.container-start .container-form .form-checkbox h5,
 .container-start .form-checkbox label,
 .container-start .form-checkbox input {
     cursor: pointer;
+}
+
+.container-start h5 span,
+.container-start .container-form .form-checkbox h5 {
+    position: relative;
+}
+
+
+.container-start h5 span::before,
+.container-start .container-form .form-checkbox h5::before {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    background-color: white;
+    width: 0%;
+    height: 2.5px;
+    transition: 0.3s;
+}
+
+.container-start h5 span:hover::before,
+.container-start .container-form .form-checkbox h5:hover::before {
+    width: 100%;
 }
 
 .change-form-login {
@@ -177,6 +202,82 @@
 .change-form-register {
     transform: translateX(0%);
 }
+
+.container-start .container-start-header .container-nav-mobile {
+    display: flex;
+    align-items: center;
+    margin: 0 1em;
+}
+
+.container-start .container-start-header .container-nav-mobile,
+.container-start .container-mobile header div,
+.container-start .container-mobile nav ul li button {
+    cursor: pointer;
+}
+
+.container-start .container-mobile {
+    background-color: #282828;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    transform: translateX(100%);
+    transition: 0.5s;
+}
+
+.container-start .change-nav-mobile {
+    transform: translateX(0%);
+}
+
+.container-start .container-mobile header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: yellow;
+    border-bottom: 2px solid white;
+}
+
+.container-start .container-mobile header div {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.5em;
+    transition: 0.5s;
+}
+
+.container-start .container-mobile header div:hover {
+    color: #7e7a7a;
+}
+
+.container-start .container-mobile nav {
+    margin: 1em 0;
+    width: 100%;
+}
+
+.container-start .container-mobile nav ul li{
+    margin: 0.5em 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-start .container-mobile nav ul li button {
+    width: 80%;
+    height: 100%;
+    border-bottom: 2px solid white;
+    transition: 0.5s;
+}
+
+.container-start .container-mobile nav ul li button:hover {
+    padding-bottom: 25px;
+}
+
 
 @media screen and (max-width: 500px){
     .container-start .container-start-header .start-header-title {
@@ -190,7 +291,7 @@
     }
 
     .container-start .container-form .form-input {
-        margin: 0.5em 0;
+        margin: 0.6em 0;
     }
 
     .container-start .container-form .form-input input {
@@ -198,11 +299,11 @@
     }
 
     .container-start .container-form .form-input label {
-        font-size: 0.8em;
+        font-size: 0.9em;
     }
 
     .container-start .container-form .form-checkbox {
-        font-size: 0.75em;
+        font-size: 0.9em;   
     }
 
     .container-start .container-form .form-submit {
@@ -215,4 +316,41 @@
     .container-start .container-form .start-register .form-submit {
         height: 1.7em;
     }
+
+    .container-start .container-form .start-register {
+        margin: 0.5em 0;
+    }
+}
+
+@media screen and (min-width: 940px){
+    .container-start .container-start-header nav {
+        display: flex;
+    }
+
+    .container-start .container-start-header .container-nav-mobile {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 940px){
+
+    .container-start .container-form {
+        width: 350px;
+        height: 400px;
+    }
+
+    .container-start .container-start-header nav {
+        display: none;
+    }
+
+
+    .container-start .container-start-header .container-nav-mobile {
+        display: flex;
+    }
+
+    .container-start .container-form .form-checkbox {
+        font-size: 0.9em;
+        margin: 1.2em 0em;
+    }
+
 }
