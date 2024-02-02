@@ -89,3 +89,11 @@
         padding: 0 4em;
     }
 }
+
+@media screen and (max-width: 940px){
+    .container-popup .container-popup-content {
+        width: 300px;
+        height: 450px;
+        font-size: 0.8em;
+    }
+}

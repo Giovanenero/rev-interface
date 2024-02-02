@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 }
 
 .container-start .container-start-header {
@@ -117,6 +118,7 @@
     position: relative;
     border-bottom: 2px solid white;
     margin: 0.8em 0;
+    align-items: center;
 }
 
 .container-start .container-form .start-register .form-input {
@@ -288,31 +290,12 @@
     padding-bottom: 25px;
 }
 
-
-@media screen and (max-width: 500px){
-    .container-start .container-start-header .start-header-title {
-        font-size: 1.5em;
-    }
-
-    .container-start .container-form .form-input input {
-        font-size: 0.8em;
-    }
-
-    .container-start .container-form .form-input label {
-        font-size: 0.9em;
-    }
-
-    .container-start .container-form .form-checkbox {
-        font-size: 0.9em;   
-    }
-    .container-start .container-form .start-register .form-submit {
-        height: 1.7em;
-    }
-
-    .container-start .container-form .start-register {
-        margin: 0.5em 0;
+@media screen and (max-width: 1300px){
+    .container-start .container-start-header nav {
+        width: 40%;
     }
 }
+
 
 @media screen and (min-width: 940px){
     .container-start .container-start-header nav {
@@ -362,8 +345,30 @@
     }
 }
 
-@media screen and (max-width: 1300px){
-    .container-start .container-start-header nav {
-        width: 40%;
+@media screen and (max-width: 500px){
+
+    .container-start .container-form {
+        width: 280px;
+        height: 400px;
+    }
+
+    .container-start .container-form .form-input input {
+        font-size: 0.6em;
+    }
+
+    .container-start .container-form .form-input label {
+        font-size: 0.9em;
+    }
+
+    .container-start .container-form .form-checkbox {
+        font-size: 0.6em;   
+    }   
+
+    .container-start .container-form .start-register .form-submit {
+        height: 1.7em;
+    }
+
+    .container-start .container-form .start-register {
+        margin: 0.5em 0;
     }
 }
