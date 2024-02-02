@@ -9,7 +9,6 @@ const api = axios.create({
 function createacontSerive(data, setMessagePopup){
     api.post("/createuser", data)
     .then((response) => {
-        console.log(response)
         setMessagePopup({
             type: response.status === 201 ? "success" : "error",
             title: response.status === 201 ? "Sucesso!" : "Operação não realizada!",

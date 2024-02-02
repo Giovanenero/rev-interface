@@ -1,6 +1,7 @@
 import React from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { FiLock } from "react-icons/fi";
+import { FiUnlock } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
@@ -23,14 +24,13 @@ function Start() {
     const [verticalNavTrigger, setVerticalNavTrigger] = React.useState(false);
     const [messagePopup, setMessagePopup] = React.useState(false);
     const [user, setUser] = React.useState({
-        firstName: "",
-        lastName: "",
+        name: "",
         password: "",
         password_2: "",
         email: ""
     })
 
-    const handleRegister = () => {setIsRegister(!isRegister); setUser({firstName: "", lastName: "", password: "", password_2: "", email: ""})};
+    const handleRegister = () => {setIsRegister(!isRegister); setUser({name: "", password: "", password_2: "", email: ""})};
     const handleVerticalNav = () => setVerticalNavTrigger(!verticalNavTrigger);
 
     const handleInputChange = (e) => {
@@ -40,21 +40,43 @@ function Start() {
 
     const createacont = (e) => {
         if(
-            user?.firstName !== "" &&
-            user?.lastName !== "" &&
+            user?.name !== "" &&
             user?.password !== "" &&
             user?.password_2 !== "" &&
             user?.email !== ""
         ){
             e.preventDefault();
-            createacontSerive(user, setMessagePopup);
+            if(user.password.trim() !== user.password_2.trim()){
+                setMessagePopup({
+                    type: "error",
+                    title: "Ops! :(",
+                    text: "Senha incopatível."
+                });
+            } else if(!user.email.includes("@")){
+                setMessagePopup({
+                    type: "error",
+                    title: "Ops! :(",
+                    text: "Email invalido."
+                });
+            } else {
+                setMessagePopup({
+                    type: "question",
+                    title: "Ops! :(",
+                    text: "Certifique-se de que os email e senhas."
+                });
+            }
         }
     }
 
     const login = (e) => {
         if(user?.password !== "" && user?.email !== ""){
             e.preventDefault();
-            loginService(user)
+            setMessagePopup({
+                type: "question",
+                title: "Ops! :(",
+                text: "Certifique-se de que os email e senhas."
+            });
+            //loginService(user)
         }
     }
 
@@ -131,24 +153,12 @@ function Start() {
                     <input 
                         maxLength={15}
                         type="text" 
-                        name="firstName"
-                        value={user.firstName}
+                        name="name"
+                        value={user.name}
                         onChange={handleInputChange}
                         required
                     />
                     <label>Nome</label>
-                    <FaRegUser />
-                </div>
-                <div className="form-input">
-                    <input
-                        maxLength={32}
-                        type="text"
-                        value={user.lastName}
-                        name="lastName"
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <label>Sobrenome</label>
                     <FaRegUser />
                 </div>
                 <div className="form-input">
@@ -185,7 +195,7 @@ function Start() {
                         required
                     />
                     <label>Senha novamente</label>
-                    <FiLock />
+                    <FiUnlock />
                 </div>
                 <button className="form-submit" type="submit" onClick={createacont}>Registrar</button>
                 <h5><span onClick={handleRegister}>Ja tenho uma conta!</span></h5>
@@ -197,6 +207,7 @@ function Start() {
                 text={messagePopup?.text}
                 title={messagePopup?.title}
                 setTrigger={setMessagePopup}
+                onClick={() => {createacontSerive(user, setMessagePopup)}}
             />
         )}
     </div>

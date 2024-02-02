@@ -1,27 +1,19 @@
 import { IoMdClose } from "react-icons/io";
 import { FaCheck } from "react-icons/fa"
 import { BsInfoCircle } from "react-icons/bs";
+import { BsQuestionOctagon } from "react-icons/bs";
 
 import "./PopUp.css"
 
 // props:
 // type: succes, error, info
 
-// recommend colors:
-// succes = rgb(35, 134, 54)
-// error = #EB5757
-// info: rgb(255, 205, 41)
-
-// recommed size:
-// success = 125
-// error = 150
-// info: 150
-
 function PopUp({
     type,
     text,
     title,
-    setTrigger
+    setTrigger,
+    onClick
 }){
 
     let styles = {
@@ -39,6 +31,11 @@ function PopUp({
             size: 175,
             color: "rgb(255, 205, 41)",
             icon: <BsInfoCircle size={175} color="rgb(255, 205, 41)"/>
+        },
+        question: {
+            size: 175,
+            color: "rgb(255, 205, 41)",
+            icon: <BsQuestionOctagon size={175} color="rgb(255, 205, 41)"/>
         }
     }
 
@@ -52,15 +49,34 @@ function PopUp({
                     <h3>{title}</h3>
                     <p>{text}</p>
                 </article>
-                <div className="container-popup-button">
-                    <button 
-                        type="button" 
-                        style={{background: styles[type].color}}
-                        onClick={() => {setTrigger(false)}}
-                    >
-                        Ok!
-                    </button>
-                </div>
+                {type !== "question" ? (
+                    <div className="container-popup-button">
+                        <button 
+                            type="button" 
+                            style={{background: styles[type].color}}
+                            onClick={() => {setTrigger(false)}}
+                        >
+                            Ok!
+                        </button>
+                    </div>
+                ) : (
+                    <div className="container-popup-button">
+                        <button 
+                            type="button" 
+                            style={{background: styles[type].color}}
+                            onClick={onClick}
+                        >
+                            Certo!
+                        </button>
+                        <button 
+                            type="button" 
+                            style={{background: styles[type].color}}
+                            onClick={() => {setTrigger(false)}}
+                        >
+                            Voltar
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     )
