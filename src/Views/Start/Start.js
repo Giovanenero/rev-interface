@@ -10,25 +10,22 @@ import { BsInfoCircle } from "react-icons/bs";
 import { TiPhoneOutline } from "react-icons/ti";
 
 
-import { createacontSerive, loginService } from "./../Services/UserService.js";
+import UserService from "./../../Services/UserService.js"
 
-import logo from "./../Assets/logo-rev.png";
+import logo from "./../../Assets/logo-rev.png";
 
 import "./Start.css";
 
-import PopUp from "./../Components/PopUp.js"
+import PopUp from "./../../Components/PopUp/PopUp.js"
+import Loader from "./../../Components/Loader/Loader.js";
 
 function Start() {
 
     const [isRegister, setIsRegister] = React.useState(false);
     const [verticalNavTrigger, setVerticalNavTrigger] = React.useState(false);
     const [messagePopup, setMessagePopup] = React.useState(false);
-    const [user, setUser] = React.useState({
-        name: "",
-        password: "",
-        password_2: "",
-        email: ""
-    })
+    const [showLoading, setShowLoading] = React.useState(false);
+    const [user, setUser] = React.useState({name: "", password: "", password_2: "", email: ""})
 
     const handleRegister = () => {setIsRegister(!isRegister); setUser({name: "", password: "", password_2: "", email: ""})};
     const handleVerticalNav = () => setVerticalNavTrigger(!verticalNavTrigger);
@@ -39,12 +36,7 @@ function Start() {
     }
 
     const createacont = (e) => {
-        if(
-            user?.name !== "" &&
-            user?.password !== "" &&
-            user?.password_2 !== "" &&
-            user?.email !== ""
-        ){
+        if(user?.name !== "" && user?.password !== "" && user?.password_2 !== "" && user?.email !== ""){
             e.preventDefault();
             if(user.password.trim() !== user.password_2.trim()){
                 setMessagePopup({
@@ -61,8 +53,8 @@ function Start() {
             } else {
                 setMessagePopup({
                     type: "question",
-                    title: "Ops! :(",
-                    text: "Certifique-se de que os email e senhas."
+                    title: "",
+                    text: "Certifique-se de que os email e senha estão corretos.",
                 });
             }
         }
@@ -72,11 +64,10 @@ function Start() {
         if(user?.password !== "" && user?.email !== ""){
             e.preventDefault();
             setMessagePopup({
-                type: "question",
+                type: "error",
                 title: "Ops! :(",
-                text: "Certifique-se de que os email e senhas."
+                text: "Não foi possível fazer seu login. Tente novamente mais tarde!"
             });
-            //loginService(user)
         }
     }
 
@@ -201,13 +192,30 @@ function Start() {
                 <h5><span onClick={handleRegister}>Ja tenho uma conta!</span></h5>
             </form>
         </div>
+        {showLoading && <Loader />}
         {messagePopup && (
             <PopUp 
                 type={messagePopup?.type} 
                 text={messagePopup?.text}
                 title={messagePopup?.title}
                 setTrigger={setMessagePopup}
-                onClick={() => {createacontSerive(user, setMessagePopup)}}
+                onClick={() => {
+                    setShowLoading(true);
+                    UserService.createacontSerive(user)
+                        .then(response => {
+                            setMessagePopup({
+                                type: response.status === 201 ? "success" : "error",
+                                title: response.status === 201 ? "Sucesso!" : "Operação não realizada!",
+                                text: response.data
+                            });
+                        }).catch(error => {
+                            setMessagePopup({
+                                type: "error",
+                                title: "Operação não realizada!",
+                                text: error.response.data
+                            });
+                        }).finally(() => {setShowLoading(false)})
+                }}
             />
         )}
     </div>

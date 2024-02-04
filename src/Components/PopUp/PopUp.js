@@ -6,7 +6,7 @@ import { BsQuestionOctagon } from "react-icons/bs";
 import "./PopUp.css"
 
 // props:
-// type: succes, error, info
+// type: succes, error, info, question
 
 function PopUp({
     type,
@@ -60,7 +60,7 @@ function PopUp({
                         </button>
                     </div>
                 ) : (
-                    <div className="container-popup-button">
+                    <div className="container-popup-buttons">
                         <button 
                             type="button" 
                             style={{background: styles[type].color}}

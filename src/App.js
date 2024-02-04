@@ -1,5 +1,5 @@
 import React from "react";
-import Start from "./Views/Start.js";
+import Start from "./Views/Start/Start.js";
 
 function App() {
   return (
