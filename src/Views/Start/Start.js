@@ -35,7 +35,7 @@ function Start() {
         setUser({ ...user, [name]: value });
     }
 
-    const createacont = (e) => {
+    const createacontButton = (e) => {
         if(user?.name !== "" && user?.password !== "" && user?.password_2 !== "" && user?.email !== ""){
             e.preventDefault();
             if(user.password.trim() !== user.password_2.trim()){
@@ -60,15 +60,75 @@ function Start() {
         }
     }
 
+    const createacontOnClick = () => {
+        setShowLoading(true);
+        UserService.createacontSerive(user)
+            .then(response => {
+                setMessagePopup({
+                    type: response.status === 201 ? "success" : "error",
+                    title: response.status === 201 ? "Sucesso!" : "Operação não realizada!",
+                    text: response.data
+                });
+            }).catch(error => {
+                setMessagePopup({
+                    type: "error",
+                    title: "Operação não realizada!",
+                    text: error.response.data
+                });
+        }).finally(() => {setShowLoading(false)})
+    }
+
+    const activeAcount = () => {
+        const div = document.getElementById("input")
+        const input = div.getElementsByTagName("input")[0];
+        const value = input.value;
+        setMessagePopup(false);
+        setShowLoading(true);
+        UserService.verifyUserService({code: value, email: user.email})
+        .then(response => {
+            console.log(response);
+        }).catch((error) => {
+            setMessagePopup({
+                type: "error",
+                title: "Operação não realizada!",
+                text: error.response.data
+            });
+        }).finally(() => {setShowLoading(false)})
+    }
+    
     const login = (e) => {
         if(user?.password !== "" && user?.email !== ""){
             e.preventDefault();
-            setMessagePopup({
-                type: "error",
-                title: "Ops! :(",
-                text: "Não foi possível fazer seu login. Tente novamente mais tarde!"
-            });
+            UserService.loginService(user)
+            .then(response => {
+                console.log("then: ", response)
+                if(response.status === 204){
+                    setMessagePopup({
+                        type: "input",
+                        title: "Insira o código de ativação que enviamos por email.",
+                        text: ""
+                    });
+                } else {
+                    //faz o login
+                }
+            })
+            .catch(() => {
+                setMessagePopup({
+                    type: "error",
+                    title: "Ops! :(",
+                    text: "Não foi possível fazer seu login. Tente novamente mais tarde!"
+                });
+            })
         }
+
+        /*
+        e.preventDefault();
+        setMessagePopup({
+            type: "input",
+            title: "Insira o código de ativação que enviamos por email.",
+            text: ""
+        });
+        */
     }
 
   return (
@@ -188,7 +248,7 @@ function Start() {
                     <label>Senha novamente</label>
                     <FiUnlock />
                 </div>
-                <button className="form-submit" type="submit" onClick={createacont}>Registrar</button>
+                <button className="form-submit" type="submit" onClick={createacontButton}>Registrar</button>
                 <h5><span onClick={handleRegister}>Ja tenho uma conta!</span></h5>
             </form>
         </div>
@@ -199,23 +259,7 @@ function Start() {
                 text={messagePopup?.text}
                 title={messagePopup?.title}
                 setTrigger={setMessagePopup}
-                onClick={() => {
-                    setShowLoading(true);
-                    UserService.createacontSerive(user)
-                        .then(response => {
-                            setMessagePopup({
-                                type: response.status === 201 ? "success" : "error",
-                                title: response.status === 201 ? "Sucesso!" : "Operação não realizada!",
-                                text: response.data
-                            });
-                        }).catch(error => {
-                            setMessagePopup({
-                                type: "error",
-                                title: "Operação não realizada!",
-                                text: error.response.data
-                            });
-                        }).finally(() => {setShowLoading(false)})
-                }}
+                onClick={() => {messagePopup?.type === "question" ? createacontOnClick() : activeAcount()}}
             />
         )}
     </div>

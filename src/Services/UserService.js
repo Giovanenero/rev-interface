@@ -11,13 +11,24 @@ async function createacontSerive(data){
     });
 }
 
-function loginService(data){
-    console.log(data);
+async function loginService(data){
+    return await api.post("/login", data)
+    .then((response) => {
+        return response;
+    });
+}
+
+async function verifyUserService(data){
+    return await api.post("/verifyuser", data)
+    .then((response) => {
+        return response;
+    });
 }
 
 const UserService = {
     createacontSerive,
-    loginService
+    loginService,
+    verifyUserService
 }
 
 export default UserService;
